@@ -109,9 +109,63 @@ class KendaraanController {
 
     static async update(req, res) {
         try {
+            const { UserID: currUserID, Peran, Perusahaan } = req.dataSession;
+            const kendaraanID = parseInt(req.params.KendaraanID);
+            const { Nopol, Jenis, BahanBakar, Merek, Tipe, Status, JarakTempuh, UserIDTerkait } =
+                req.body;
 
+            if (Peran !== "Owner" && Peran !== "Admin") {
+                return res.status(403).json({ message: "Akses ditolak" });
+            }
+            const kendaraan = dataKendaraan.find((k) => k.id === kendaraanID);
+            if (!kendaraan) {
+                return res.status(404).json({ message: "Pengguna tidak ditemukan" });
+            }
+            if (kendaraan.id_perusahaan !== Perusahaan.PerusahaanID) {
+                return res.status(403).json({ message: "Akses ditolak" });
+            }
+
+            if (Nopol.trim()) kendaraan.nopol = Nopol;
+            if (Jenis.trim()) kendaraan.jenis = Jenis;
+            if (BahanBakar.trim()) kendaraan.bahanbakar = BahanBakar;
+            if (Merek.trim()) kendaraan.merek = Merek;
+            if (Tipe.trim()) kendaraan.tipe = Tipe;
+            if (Status.trim()) kendaraan.status = Status;
+            if (JarakTempuh.trim()) kendaraan.jarak_tempuh = JarakTempuh;
+            if (UserIDTerkait.trim()) kendaraan.id_pengguna = UserIDTerkait;
+
+            const fotoPath = req.file
+                ? `${process.env.SERVER_URL}/uploads/gambarkendaraan/${req.file.filename}`
+                : null;
+
+            //kalo ada input foto
+            //update foto yang sudah ada
+            if (fotoPath !== null) {
+                kendaraan.foto = fotoPath;
+            }
+
+            const transformedKendaraan = {
+                id: kendaraan.id,
+                id_perusahaan: kendaraan.id_perusahaan,
+                id_pengguna: kendaraan.id_pengguna,
+                nopol: kendaraan.nopol,
+                foto: kendaraan.foto,
+                bahanbakar: kendaraan.bahanbakar,
+                jenis: kendaraan.jenis,
+                merek: kendaraan.merek,
+                tipe: kendaraan.tipe,
+                status: kendaraan.status,
+                jarak_tempuh: kendaraan.jarak_tempuh,
+            }
+
+            res.status(200).json({
+                success: true,
+                message: "Kendaraan berhasil diperbarui",
+                data: transformedKendaraan,
+            });
         } catch (error) {
-
+            console.error(error);
+            res.status(error.status || 500).json({ error: error.message });
         }
     }
 
@@ -139,7 +193,8 @@ class KendaraanController {
 
             res.status(200).json({ success: true, message: "Kendaraan berhasil dihapus" });
         } catch (error) {
-
+            console.error(error);
+            res.status(error.status || 500).json({ error: error.message });
         }
     }
 }

@@ -1,6 +1,5 @@
-import { createEffect } from "solid-js";
 import style from "../style";
-import { ModalBase } from "./index";
+import ModalBase from "./ModalBase";
 import axios from "axios";
 import { urlServer } from "../Utils";
 
@@ -14,6 +13,7 @@ function Tambah(props) {
 
 function Detail(props) {
     const userSession = JSON.parse(localStorage.getItem("userSession"));
+
     const onDelete = async () => {
         try {
             const headers = {
@@ -21,10 +21,12 @@ function Detail(props) {
                     authorization: userSession?.AuthKey,
                 },
             };
-            const response = await axios.delete(`${urlServer}/pengguna/${props.open()}`, headers);
+            // GUNAKAN props.id, BUKAN props.open()
+            const response = await axios.delete(`${urlServer}/pengguna/${props.id}`, headers);
 
             if (response.data?.success === true) {
                 alert("Data pengguna berhasil dihapus");
+                if (props.onDeleteSuccess) props.onDeleteSuccess();
             }
         } catch (error) {
             alert(
@@ -41,13 +43,13 @@ function Detail(props) {
         <ModalBase
             open={props.open}
             onClose={props.onClose}
-            judul={props.judul || "Detail data"}
+            judul={props.judul || "Detail Data"}
             footer={
                 <div class="flex justify-between">
                     <button
                         class={style.buttonDanger}
-                        onClick={() => {
-                            onDelete();
+                        onClick={async () => {
+                            await onDelete();
                             props.onClose();
                         }}
                     >

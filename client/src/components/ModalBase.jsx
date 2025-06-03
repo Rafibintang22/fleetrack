@@ -4,18 +4,17 @@ function ModalBase({ open, onClose, judul, children, footer }) {
     return (
         <div
             class={`fixed inset-0 z-50 bg-[var(--transparant)] overflow-auto flex justify-center items-center transition-opacity duration-300 ${
-                open() ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+                open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
             }`}
             onClick={onClose}
         >
             <div
                 class="relative p-4 w-full max-w-2xl max-h-full"
-                //biar container modal dipencet ga ke close
                 onClick={(e) => e.stopPropagation()}
             >
                 <div
                     class={`transform transition-all duration-300 ease-out ${
-                        open() ? "opacity-100 scale-100" : "opacity-0 scale-95"
+                        open ? "opacity-100 scale-100" : "opacity-0 scale-95"
                     } bg-white rounded-lg shadow-sm`}
                 >
                     <div class="flex items-center justify-between p-2 md:p-3 border-b rounded-t border-gray-200">

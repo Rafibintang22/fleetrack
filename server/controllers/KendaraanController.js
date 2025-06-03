@@ -39,7 +39,7 @@ class KendaraanController {
         try {
             const { Peran, Perusahaan } = req.dataSession;
 
-            if (Peran !== "Owner" && Peran !== "Admin") {
+            if (Peran !== "Owner") {
                 return res.status(403).json({ message: "Akses ditolak" });
             }
 
@@ -113,25 +113,25 @@ class KendaraanController {
             const { Nopol, Jenis, BahanBakar, Merek, Tipe, Status, JarakTempuh, UserIDTerkait } =
                 req.body;
 
-            if (Peran !== "Owner" && Peran !== "Admin") {
+            if (Peran !== "Owner") {
                 return res.status(403).json({ message: "Akses ditolak" });
             }
             const kendaraan = dataKendaraan.find((k) => k.id === kendaraanID);
             if (!kendaraan) {
-                return res.status(404).json({ message: "Pengguna tidak ditemukan" });
+                return res.status(404).json({ message: "Kendaraan tidak ditemukan" });
             }
             if (kendaraan.id_perusahaan !== Perusahaan.PerusahaanID) {
                 return res.status(403).json({ message: "Akses ditolak" });
             }
 
-            if (Nopol.trim()) kendaraan.nopol = Nopol;
-            if (Jenis.trim()) kendaraan.jenis = Jenis;
-            if (BahanBakar.trim()) kendaraan.bahanbakar = BahanBakar;
-            if (Merek.trim()) kendaraan.merek = Merek;
-            if (Tipe.trim()) kendaraan.tipe = Tipe;
-            if (Status.trim()) kendaraan.status = Status;
-            if (JarakTempuh.trim()) kendaraan.jarak_tempuh = JarakTempuh;
-            if (UserIDTerkait.trim()) kendaraan.id_pengguna = UserIDTerkait;
+            kendaraan.nopol = Nopol;
+            kendaraan.jenis = Jenis;
+            kendaraan.bahanbakar = BahanBakar;
+            kendaraan.merek = Merek;
+            kendaraan.tipe = Tipe;
+            kendaraan.status = Status;
+            kendaraan.jarak_tempuh = JarakTempuh;
+            kendaraan.id_pengguna = UserIDTerkait;
 
             const fotoPath = req.file
                 ? `${process.env.SERVER_URL}/uploads/gambarkendaraan/${req.file.filename}`
@@ -144,18 +144,18 @@ class KendaraanController {
             }
 
             const transformedKendaraan = {
-                id: kendaraan.id,
-                id_perusahaan: kendaraan.id_perusahaan,
-                id_pengguna: kendaraan.id_pengguna,
-                nopol: kendaraan.nopol,
-                foto: kendaraan.foto,
-                bahanbakar: kendaraan.bahanbakar,
-                jenis: kendaraan.jenis,
-                merek: kendaraan.merek,
-                tipe: kendaraan.tipe,
-                status: kendaraan.status,
-                jarak_tempuh: kendaraan.jarak_tempuh,
-            }
+                KendaraanID: kendaraan.id,
+                PerusahaanID: kendaraan.id_perusahaan,
+                UserID: kendaraan.id_pengguna,
+                Nopol: kendaraan.nopol,
+                Foto: kendaraan.foto,
+                BahanBakar: kendaraan.bahanbakar,
+                Jenis: kendaraan.jenis,
+                Merek: kendaraan.merek,
+                Tipe: kendaraan.tipe,
+                Status: kendaraan.status,
+                JarakTempuh: kendaraan.jarak_tempuh,
+            };
 
             res.status(200).json({
                 success: true,
@@ -201,14 +201,24 @@ class KendaraanController {
         try {
             const { Perusahaan } = req.dataSession;
             const perusahaanID = Perusahaan.PerusahaanID;
-            console.log(perusahaanID);
 
-            const kendaraanPerusahaan = dataKendaraan.filter(k => k.id_perusahaan === perusahaanID);
+            const kendaraanPerusahaan = dataKendaraan.filter(
+                (k) => k.id_perusahaan === perusahaanID
+            );
             const totalKendaraan = kendaraanPerusahaan.length;
-            const totalAktif = kendaraanPerusahaan.filter(k => k.status === "Aktif").length;
-            const totalDalamPerbaikan = kendaraanPerusahaan.filter(k => k.status === "Dalam Perbaikan").length;
-            const totalTidakAtif = kendaraanPerusahaan.filter(k => k.status === "NonAktif").length;
-            const dataKendaraanPerusahaan = { totalKendaraan, totalAktif, totalDalamPerbaikan, totalTidakAtif };
+            const totalAktif = kendaraanPerusahaan.filter((k) => k.status === "Aktif").length;
+            const totalDalamPerbaikan = kendaraanPerusahaan.filter(
+                (k) => k.status === "Dalam Perbaikan"
+            ).length;
+            const totalTidakAtif = kendaraanPerusahaan.filter(
+                (k) => k.status === "NonAktif"
+            ).length;
+            const dataKendaraanPerusahaan = {
+                TotalKendaraan: totalKendaraan,
+                TotalAktif: totalAktif,
+                TotalDalamPerbaikan: totalDalamPerbaikan,
+                TotalTidakAtif: totalTidakAtif,
+            };
             res.status(200).json({ success: true, message: dataKendaraanPerusahaan });
         } catch (error) {
             console.error(error);

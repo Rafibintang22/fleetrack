@@ -106,6 +106,42 @@ class KendaraanController {
             res.status(error.status || 500).json({ error: error.message });
         }
     }
+
+    static async update(req, res) {
+        try {
+
+        } catch (error) {
+
+        }
+    }
+
+    static async delete(req, res) {
+        try {
+            const { Peran, Perusahaan } = req.dataSession;
+            const kendaraanID = parseInt(req.params.KendaraanID);
+
+            if (Peran !== "Owner" && Peran !== "Admin") {
+                return res.status(403).json({ message: "Akses ditolak" });
+            }
+
+            const index = dataKendaraan.findIndex((k) => k.id === kendaraanID);
+
+            if (index === -1) {
+                return res.status(404).json({ message: "Kendaraan tidak ditemukan" });
+            }
+
+            const kendaraan = dataKendaraan[index];
+            if (kendaraan.id_perusahaan !== Perusahaan.PerusahaanID) {
+                return res.status(403).json({ message: "Akses ditolak" });
+            }
+
+            dataKendaraan.splice(index, 1);
+
+            res.status(200).json({ success: true, message: "Kendaraan berhasil dihapus" });
+        } catch (error) {
+
+        }
+    }
 }
 
 module.exports = { KendaraanController };

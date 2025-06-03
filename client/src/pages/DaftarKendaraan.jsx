@@ -1,8 +1,8 @@
 import { createResource, createSignal, For, Show } from "solid-js";
 import { HeaderMainContent, Modal, Table } from "../components";
 import GlobalLayout from "../components/layout/GlobalLayout";
-import { dataKendaraan } from "../Utils/Model";
 import { toogleModal, urlServer, UseSessionCheck } from "../Utils";
+import { dataKendaraan } from "../Utils/Model";
 import axios from "axios";
 import { FormTambahKendaraan } from "../components/form";
 
@@ -17,6 +17,10 @@ function DaftarKendaraan() {
         openModalDetail,
         closeModalDetail,
     } = toogleModal;
+
+    // State untuk edit kendaraan
+    const [isModalEdit, setIsModalEdit] = createSignal(false);
+    const [editKendaraan, setEditKendaraan] = createSignal(null);
 
     axios.defaults.withCredentials = true;
     const fetchKendaraan = async () => {
@@ -36,6 +40,30 @@ function DaftarKendaraan() {
     };
     const [listKendaraan, { refetch }] = createResource(fetchKendaraan);
 
+    // Handler untuk edit
+    const handleEdit = (kendaraan) => {
+        setEditKendaraan(kendaraan);
+        setIsModalEdit(true);
+    };
+
+    // Handler untuk delete
+    const handleDelete = async (kendaraan) => {
+        if (window.confirm("Yakin ingin menghapus kendaraan ini?")) {
+            try {
+                const headers = {
+                    headers: {
+                        authorization: userSession?.AuthKey,
+                    },
+                };
+                await axios.delete(`${urlServer}/kendaraan/${kendaraan.id}`, headers);
+                refetch();
+                alert("Berhasil menghapus data!");
+            } catch (error) {
+                alert("Gagal menghapus data kendaraan.");
+            }
+        }
+    };
+
     return (
         <>
             <GlobalLayout>
@@ -50,10 +78,13 @@ function DaftarKendaraan() {
                         <Table.DaftarKendaraan
                             data={listKendaraan.loading ? [] : listKendaraan()}
                             setOpen={openModalDetail}
+                            onEdit={handleEdit}
+                            onDelete={handleDelete}
                         />
                     </Show>
                 </div>
             </GlobalLayout>
+            {/* Modal Tambah */}
             <Modal.Tambah
                 open={isModalTambah}
                 onClose={closeModalTambah}
@@ -66,6 +97,22 @@ function DaftarKendaraan() {
                     }}
                 />
             </Modal.Tambah>
+            {/* Modal Edit */}
+            <Modal.Tambah
+                open={isModalEdit()}
+                onClose={() => setIsModalEdit(false)}
+                judul="Edit Data Kendaraan"
+            >
+                <FormTambahKendaraan
+                    data={editKendaraan()}
+                    mode="edit"
+                    onSuccess={() => {
+                        setIsModalEdit(false);
+                        refetch();
+                    }}
+                />
+            </Modal.Tambah>
+            {/* Modal Detail */}
             <Modal.Detail
                 open={isModalDetail}
                 onClose={closeModalDetail}

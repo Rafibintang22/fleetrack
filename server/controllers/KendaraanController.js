@@ -197,6 +197,25 @@ class KendaraanController {
             res.status(error.status || 500).json({ error: error.message });
         }
     }
+
+    static async getJumlahKendaraan(req, res) {
+        try {
+            const { Perusahaan } = req.dataSession;
+            const perusahaanID = Perusahaan.PerusahaanID;
+            console.log(perusahaanID);
+
+            const kendaraanPerusahaan = dataKendaraan.filter(k => k.id_perusahaan === perusahaanID);
+            const totalKendaraan = kendaraanPerusahaan.length;
+            const totalAktif = kendaraanPerusahaan.filter(k => k.status === "Aktif").length;
+            const totalDalamPerbaikan = kendaraanPerusahaan.filter(k => k.status === "Dalam Perbaikan").length;
+            const totalTidakAtif = kendaraanPerusahaan.filter(k => k.status === "NonAktif").length;
+            const dataKendaraanPerusahaan = { totalKendaraan, totalAktif, totalDalamPerbaikan, totalTidakAtif };
+            res.status(200).json({ success: true, message: dataKendaraanPerusahaan });
+        } catch (error) {
+            console.error(error);
+            res.status(error.status || 500).json({ error: error.message });
+        }
+    }
 }
 
 module.exports = { KendaraanController };

@@ -28,10 +28,9 @@ function Detail(props) {
             }
         } catch (error) {
             alert(
-                `Terjadi kesalahan${
-                    error.response?.data?.message
-                        ? ", " + error.response.data.message
-                        : " dalam hapus data pengguna"
+                `Terjadi kesalahan${error.response?.data?.message
+                    ? ", " + error.response.data.message
+                    : " dalam hapus data pengguna"
                 }`
             );
         }

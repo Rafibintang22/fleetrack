@@ -1,7 +1,6 @@
 const { dataKendaraan } = require("../mockupData");
 
 class KendaraanController {
-    // GET ALL – hanya untuk ADMIN dan OWNER
     static async getAll(req, res) {
         try {
             const { UserID, Peran, Perusahaan } = req.dataSession;
@@ -14,7 +13,7 @@ class KendaraanController {
                 );
             } else {
                 allKendaraan = dataKendaraan.filter(
-                    (u) => u.id_perusahaan === Perusahaan.PerusahaanID && u.id !== UserID
+                    (u) => u.id_perusahaan === Perusahaan.PerusahaanID && u.id_pengguna === UserID
                 );
             }
 

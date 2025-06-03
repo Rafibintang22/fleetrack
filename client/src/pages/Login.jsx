@@ -66,7 +66,10 @@ function Login() {
                 >
                     Fitur yang dapat dilakukan saat ini masih terbatas : login, registrasi,
                     mengelola data pengguna, pengaturan akun, tambah kendaraan, lihat kendaraan
-                    sesuai dengan perusahaannya.
+                    sesuai dengan perusahaannya. <br />
+                    Akun Pengguna (atau bisa register): <br />
+                    email: rafibintang26.rb@gmail.com <br />
+                    password: 12345678
                 </p>
                 <div class="flex gap-2 items-center group overflow-hidden justify-center">
                     <img

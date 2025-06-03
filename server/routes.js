@@ -29,4 +29,6 @@ router.post(
     upload.single("Foto"),
     KendaraanController.create
 );
+router.get("/kendaraan/dashboard", Authorization.decryption, KendaraanController.getJumlahKendaraan);
+router.delete("/kendaraan/:KendaraanID", Authorization.decryption, KendaraanController.delete);
 module.exports = { router };

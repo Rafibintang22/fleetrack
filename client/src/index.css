@@ -1,0 +1,40 @@
+@import "tailwindcss";
+
+/* Custom color palette menggunakan root variables */
+:root {
+    --transparant: #0000006f;
+    --orange-50: #fff3e9;
+    --orange-100: #ffe0c7;
+    --orange-200: #ffc499;
+    --orange-300: #ffa168;
+    --orange-400: #f98336;
+    --orange-500: #f06605; /* Warna utama */
+    --orange-600: #d45504;
+    --orange-700: #b74604;
+    --orange-800: #963902;
+    --orange-900: #772e02;
+
+    /* Optional aliases */
+    --primary: var(--orange-500);
+    --primary-light: var(--orange-100);
+    --primary-dark: var(--orange-700);
+    --text-color: #1f1f1f;
+    --bg-color: #fffaf7;
+}
+
+body {
+    margin: 0;
+    font-family: "montserrat";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    position: absolute;
+    overflow: hidden;
+    width: 100vw;
+    height: 100vh;
+}
+
+#root {
+    height: 100%;
+    width: 100%;
+}

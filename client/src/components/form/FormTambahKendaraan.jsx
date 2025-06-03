@@ -18,7 +18,7 @@ function FormTambahKendaraan(props) {
         Status: "Aktif",
         JarakTempuh: 0,
         Foto: null,
-        UserIDTerkait: null,
+        UserIDTerkait: "",
     });
 
     const [preview, setPreview] = createSignal("");
@@ -127,7 +127,7 @@ function FormTambahKendaraan(props) {
                     Status: "Aktif",
                     JarakTempuh: 0,
                     Foto: null,
-                    UserIDTerkait: null,
+                    UserIDTerkait: "",
                 });
                 setPreview("");
 
@@ -156,7 +156,7 @@ function FormTambahKendaraan(props) {
             Status: "Aktif",
             JarakTempuh: 0,
             Foto: null,
-            UserIDTerkait: null,
+            UserIDTerkait: "",
         });
         setPreview("");
         if (fileInputRef) {
@@ -248,7 +248,7 @@ function FormTambahKendaraan(props) {
                     }`}
                     required
                 >
-                    <option value={null}>Pilih Pengguna</option>
+                    <option value={""}>Pilih Pengguna</option>
                     {opsiPengguna.loading
                         ? []
                         : opsiPengguna().map((p) => <option value={p.UserID}>{p.Nama}</option>)}

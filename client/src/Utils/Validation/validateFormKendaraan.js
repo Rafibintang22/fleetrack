@@ -6,11 +6,11 @@ export default class validateFormKendaraan {
             errors.Nopol = "Nomor polisi wajib diisi";
         }
 
-        if (!data.BahanBakar) {
+        if (!data.BahanBakar || !data.Jenis.trim()) {
             errors.BahanBakar = "Bahan bakar wajib dipilih";
         }
 
-        if (!data.Jenis) {
+        if (!data.Jenis || !data.Jenis.trim()) {
             errors.Jenis = "Jenis kendaraan wajib dipilih";
         }
 
@@ -40,7 +40,7 @@ export default class validateFormKendaraan {
             errors.Foto = "Foto kendaraan wajib diunggah";
         }
 
-        if (!data.UserIDTerkait) {
+        if (!data.UserIDTerkait || !data.UserIDTerkait.trim()) {
             errors.UserIDTerkait = "Pengguna terkait wajib dipilih";
         }
 

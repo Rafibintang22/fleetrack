@@ -18,6 +18,7 @@ function DaftarKendaraan() {
         closeModalDetail,
     } = toogleModal;
 
+    axios.defaults.withCredentials = true;
     const fetchKendaraan = async () => {
         try {
             const headers = {

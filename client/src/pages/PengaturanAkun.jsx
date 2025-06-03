@@ -56,6 +56,7 @@ function PengaturanAkun() {
         setImagePreview(null);
     };
 
+    axios.defaults.withCredentials = true;
     const handleSubmit = async () => {
         const validation = validateFormPengguna.ubah(formData());
 

@@ -35,6 +35,7 @@ function Register() {
         }
     };
 
+    axios.defaults.withCredentials = true;
     // Handle form submit
     const handleSubmit = async (e) => {
         e.preventDefault();

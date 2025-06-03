@@ -60,6 +60,7 @@ function FormTambahKendaraan(props) {
         fileInputRef.click();
     };
 
+    axios.defaults.withCredentials = true;
     const fetchOpsiPengguna = async () => {
         try {
             const headers = {

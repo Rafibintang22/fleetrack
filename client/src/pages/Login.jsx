@@ -24,6 +24,7 @@ function Login() {
         setDataLogin((prev) => ({ ...prev, [type]: value }));
     };
 
+    axios.defaults.withCredentials = true;
     const login = async () => {
         try {
             const response = await axios.post(`${urlServer}/login`, dataLogin());

@@ -21,7 +21,7 @@ function Detail(props) {
                     authorization: userSession?.AuthKey,
                 },
             };
-            // GUNAKAN props.id, BUKAN props.open()
+            
             const response = await axios.delete(`${urlServer}/pengguna/${props.id}`, headers);
 
             if (response.data?.success === true) {

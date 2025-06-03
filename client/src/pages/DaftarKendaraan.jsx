@@ -86,7 +86,7 @@ function DaftarKendaraan() {
             </GlobalLayout>
             {/* Modal Tambah */}
             <Modal.Tambah
-                open={isModalTambah()} // <-- BENAR!
+                open={isModalTambah()}
                 onClose={closeModalTambah}
                 judul="Tambah Data Kendaraan"
             >
@@ -114,7 +114,7 @@ function DaftarKendaraan() {
             </Modal.Tambah>
             {/* Modal Detail */}
             <Modal.Detail
-                open={isModalDetail}
+                open={isModalDetail()}
                 onClose={closeModalDetail}
                 judul="Detail Data Kendaraan"
             >

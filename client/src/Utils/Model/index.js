@@ -1,5 +1,5 @@
 import { dataKendaraan } from "./KendaraanModel";
-import { columnPemeliharaan, dataPemeliharaan } from "./PemeliharaanModel";
+import { columnPemeliharaan, dataPemeliharaan, mapPemeliharaan } from "./PemeliharaanModel";
 import { columnAktivitas, dataAktivitas } from "./AktivitasKendaraan";
 import { columnPengguna, dataPengguna } from "./PenggunaModel";
 import SidebarMenu from "./SidebarMenuModel";
@@ -13,4 +13,5 @@ export {
     dataPemeliharaan,
     columnAktivitas,
     dataAktivitas,
+    mapPemeliharaan,
 };

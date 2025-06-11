@@ -20,7 +20,7 @@ class KendaraanController {
             const transformedData = allKendaraan.map((k) => ({
                 KendaraanID: k.id,
                 Nopol: k.nopol,
-                Foto: k.foto,
+                Foto: k.foto, 
                 Jenis: k.jenis,
                 Merek: k.merek,
                 Tipe: k.tipe,

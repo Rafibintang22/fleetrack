@@ -106,30 +106,34 @@ function DaftarKendaraan(props) {
 }
 
 function Basic(props) {
-    const baseData = [...props.data]; // copy tapi ga ubah props asli
-    const baseColumns = [...props.column];
-    let column = baseColumns;
-    let data = baseData;
+    
+    const column = createMemo(() => {
+        if (props.isDetail === true) {
+            return [...props.column, { key: "Aksi", name: "Aksi" }];
+        }
+        return props.column;
+    });
 
-    if (props.isDetail === true) {
-        column = [...column, { key: "Aksi", name: "Aksi" }]; // tambah kolom tanpa mutasi langsung
+    const data = createMemo(() => {
+        if (props.isDetail === true) {
+            return (props.data || []).map((row) => ({
+                ...row,
+                Aksi: (
+                    <button
+                        class={style.buttonLight}
+                        onClick={() => {
+                            props.setOpen(row.UserID);
+                        }}
+                    >
+                        Lihat detail
+                    </button>
+                ),
+            }));
+        }
+        return props.data || [];
+    });
 
-        data = baseData.map((row) => ({
-            ...row,
-            Aksi: (
-                <button
-                    class={style.buttonLight}
-                    onClick={() => {
-                        props.setOpen(row.UserID);
-                    }}
-                >
-                    Lihat detail
-                </button>
-            ),
-        }));
-    }
-
-    return <TableBase column={column} rowData={data} limit={props.limit} />;
+    return <TableBase column={column()} rowData={data()} limit={props.limit} />;
 }
 
 const Table = {

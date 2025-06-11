@@ -74,6 +74,46 @@ class PenggunaController {
         }
     }
 
+       static async search(req, res) {
+    try {
+        const { Perusahaan } = req.dataSession;
+        const { query } = req.query;
+
+        if (!query || query.trim() === "") {
+            return res.status(400).json({ message: "Query kosong" });
+        }
+
+        const lowerQuery = query.toLowerCase();
+
+        const foundPengguna = dataPengguna
+            .filter(u => u.id_perusahaan === Perusahaan.PerusahaanID)
+            .map(u => ({
+                UserID: u.id,
+                Nama: u.nama,
+                Email: u.email,
+                Peran: u.peran,
+                JumKendaraan: u.KendTerkait ?? u.JumKendaraan ?? 
+                    (Array.isArray(u.kendaraan) ? u.kendaraan.length : 0) ?? 0
+            }))
+            .filter(u =>
+                u.Nama.toLowerCase().includes(lowerQuery) ||
+                u.Email.toLowerCase().includes(lowerQuery) ||
+                u.Peran.toLowerCase().includes(lowerQuery) ||
+                String(u.JumKendaraan).includes(lowerQuery)   
+            );
+
+        if (foundPengguna.length === 0) {
+            return res.status(404).json({ message: "Tidak ada pengguna yang ditemukan" });
+        }
+
+        res.status(200).json({ success: true, data: foundPengguna });
+    } catch (error) {
+        res.status(error.status || 500).json({ error: error.message });
+    }
+}
+
+
+
     // GET ALL – hanya untuk ADMIN dan OWNER
     static async getAll(req, res) {
         try {

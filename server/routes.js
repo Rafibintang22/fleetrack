@@ -20,6 +20,11 @@ router.delete("/pengguna/:UserID", Authorization.decryption, PenggunaController.
 // KENDARAAN
 router.get("/kendaraan", Authorization.decryption, KendaraanController.getAll);
 router.get("/kendaraan/:KendaraanID", Authorization.decryption, KendaraanController.getOne);
+router.get(
+    "/kendaraan/dashboard",
+    Authorization.decryption,
+    KendaraanController.getJumlahKendaraan
+);
 router.post(
     "/kendaraan",
     Authorization.decryption,
@@ -30,4 +35,5 @@ router.post(
     upload.single("Foto"),
     KendaraanController.create
 );
+router.delete("/kendaraan/:KendaraanID", Authorization.decryption, KendaraanController.delete);
 module.exports = { router };

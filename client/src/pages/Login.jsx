@@ -24,7 +24,6 @@ function Login() {
         setDataLogin((prev) => ({ ...prev, [type]: value }));
     };
 
-    axios.defaults.withCredentials = true;
     const login = async () => {
         try {
             const response = await axios.post(`${urlServer}/login`, dataLogin());
@@ -57,7 +56,7 @@ function Login() {
     return (
         <div class="flex justify-center items-center h-screen w-full ">
             <div class="flex flex-col gap-6 p-10 rounded-xl  w-full max-w-md">
-                <p
+                {/* <p
                     class={`text-xs text-center ${
                         showForm()
                             ? "opacity-100 translate-y-0"
@@ -66,11 +65,8 @@ function Login() {
                 >
                     Fitur yang dapat dilakukan saat ini masih terbatas : login, registrasi,
                     mengelola data pengguna, pengaturan akun, tambah kendaraan, lihat kendaraan
-                    sesuai dengan perusahaannya. <br />
-                    Akun Pengguna (atau bisa register): <br />
-                    email: rafibintang26.rb@gmail.com <br />
-                    password: 12345678
-                </p>
+                    sesuai dengan perusahaannya.
+                </p> */}
                 <div class="flex gap-2 items-center group overflow-hidden justify-center">
                     <img
                         class={`w-10 h-10 transform transition-all duration-500 ease-out ${

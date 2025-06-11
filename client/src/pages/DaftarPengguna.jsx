@@ -18,7 +18,7 @@ function DaftarPengguna() {
         closeModalDetail,
     } = toogleModal;
 
-    axios.defaults.withCredentials = true;
+    // Fetch function
     const fetchPengguna = async () => {
         try {
             const headers = {

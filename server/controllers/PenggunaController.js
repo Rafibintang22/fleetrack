@@ -298,8 +298,6 @@ class PenggunaController {
             }
 
             const pengguna = dataPengguna[index];
-            // console.log(pengguna);
-
             if (pengguna.id_perusahaan !== Perusahaan.PerusahaanID) {
                 return res.status(403).json({ message: "Akses ditolak" });
             }

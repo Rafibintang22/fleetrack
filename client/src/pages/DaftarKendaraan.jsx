@@ -4,7 +4,7 @@ import GlobalLayout from "../components/layout/GlobalLayout";
 import { dataKendaraan } from "../Utils/Model";
 import { toogleModal, urlServer, UseSessionCheck } from "../Utils";
 import axios from "axios";
-import { FormTambahKendaraan } from "../components/form";
+import { FormKendaraan } from "../components/form";
 
 function DaftarKendaraan() {
     const userSession = JSON.parse(localStorage.getItem("userSession"));
@@ -18,7 +18,6 @@ function DaftarKendaraan() {
         closeModalDetail,
     } = toogleModal;
 
-    axios.defaults.withCredentials = true;
     const fetchKendaraan = async () => {
         try {
             const headers = {
@@ -59,7 +58,7 @@ function DaftarKendaraan() {
                 onClose={closeModalTambah}
                 judul="Tambah Data Kendaraan"
             >
-                <FormTambahKendaraan
+                <FormKendaraan
                     onSuccess={() => {
                         closeModalTambah();
                         refetch();
@@ -71,7 +70,13 @@ function DaftarKendaraan() {
                 onClose={closeModalDetail}
                 judul="Detail Data Kendaraan"
             >
-                <p>Konten Modal detail data kendaraan</p>
+                <FormKendaraan
+                    idData={isModalDetail()}
+                    onSuccess={() => {
+                        closeModalDetail();
+                        refetch();
+                    }}
+                />
             </Modal.Detail>
         </>
     );

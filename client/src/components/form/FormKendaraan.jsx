@@ -5,9 +5,32 @@ import { urlServer } from "../../Utils";
 import { validateFormKendaraan } from "../../Utils/Validation";
 
 // Form Component untuk Tambah Data Kendaraan
-function FormTambahKendaraan(props) {
+function FormKendaraan(props) {
     const userSession = JSON.parse(localStorage.getItem("userSession"));
     let fileInputRef;
+
+    // const fetchOneKendaraan = async (id) => {
+    //     if (!id) return null;
+
+    //     try {
+    //         const headers = {
+    //             headers: {
+    //                 authorization: userSession?.AuthKey,
+    //             },
+    //         };
+    //         const res = await axios.get(`${urlServer}/kendaraan/${id}`, headers);
+
+    //         return res.data.data;
+    //     } catch (error) {
+    //         console.error("Gagal mengambil data pengguna:", error);
+    //         throw error;
+    //     }
+    // };
+
+    // const [kendaraanData, { refetch }] = createResource(() => props.idData, fetchOneKendaraan);
+
+    const [isEditing, setIsEditing] = createSignal(false);
+    const [originalData, setOriginalData] = createSignal({});
 
     const [formData, setFormData] = createSignal({
         Nopol: "",
@@ -18,7 +41,7 @@ function FormTambahKendaraan(props) {
         Status: "Aktif",
         JarakTempuh: 0,
         Foto: null,
-        UserIDTerkait: "",
+        UserIDTerkait: null,
     });
 
     const [preview, setPreview] = createSignal("");
@@ -60,7 +83,6 @@ function FormTambahKendaraan(props) {
         fileInputRef.click();
     };
 
-    axios.defaults.withCredentials = true;
     const fetchOpsiPengguna = async () => {
         try {
             const headers = {
@@ -78,7 +100,7 @@ function FormTambahKendaraan(props) {
     };
     const [opsiPengguna, { refetch }] = createResource(fetchOpsiPengguna);
 
-    const handleSubmit = async () => {
+    const handleInsert = async () => {
         const validation = validateFormKendaraan.tambah(formData());
 
         if (!validation.isValid) {
@@ -113,7 +135,7 @@ function FormTambahKendaraan(props) {
                     "Content-Type": "multipart/form-data",
                 },
             });
-            console.log(response);
+            // console.log(response);
 
             if (response.data?.success === true) {
                 alert("Data kendaraan berhasil ditambahkan!");
@@ -127,7 +149,7 @@ function FormTambahKendaraan(props) {
                     Status: "Aktif",
                     JarakTempuh: 0,
                     Foto: null,
-                    UserIDTerkait: "",
+                    UserIDTerkait: null,
                 });
                 setPreview("");
 
@@ -156,7 +178,7 @@ function FormTambahKendaraan(props) {
             Status: "Aktif",
             JarakTempuh: 0,
             Foto: null,
-            UserIDTerkait: "",
+            UserIDTerkait: null,
         });
         setPreview("");
         if (fileInputRef) {
@@ -228,8 +250,13 @@ function FormTambahKendaraan(props) {
                     value={formData().Nopol}
                     onInput={(e) => handleInputChange("Nopol", e.target.value)}
                     placeholder="Contoh: D 1234 AB"
-                    class={`w-full ${style.input} ${
-                        errors().Nopol ? "border-red-500 bg-red-50" : "border-gray-300"
+                    disabled={!isEditing()}
+                    class={`w-full ${style.input} border rounded-lg transition-colors ${
+                        isEditing()
+                            ? `focus:outline-none focus:ring-2  focus:border-transparent ${
+                                  errors().Nopol ? "border-red-500 bg-red-50" : "border-gray-300"
+                              }`
+                            : "border-gray-300 bg-gray-50"
                     }`}
                     required
                 />
@@ -243,12 +270,19 @@ function FormTambahKendaraan(props) {
                 <select
                     value={formData().UserIDTerkait}
                     onChange={(e) => handleInputChange("UserIDTerkait", e.target.value)}
-                    class={`w-full ${style.input} ${
-                        errors().UserIDTerkait ? "border-red-500 bg-red-50" : "border-gray-300"
+                    disabled={!isEditing()}
+                    class={`w-full ${style.input} border rounded-lg transition-colors ${
+                        isEditing()
+                            ? `focus:outline-none focus:ring-2  focus:border-transparent ${
+                                  errors().UserIDTerkait
+                                      ? "border-red-500 bg-red-50"
+                                      : "border-gray-300"
+                              }`
+                            : "border-gray-300 bg-gray-50"
                     }`}
                     required
                 >
-                    <option value={""}>Pilih Pengguna</option>
+                    <option value={null}>Pilih Pengguna</option>
                     {opsiPengguna.loading
                         ? []
                         : opsiPengguna().map((p) => <option value={p.UserID}>{p.Nama}</option>)}
@@ -267,8 +301,15 @@ function FormTambahKendaraan(props) {
                     <select
                         value={formData().Jenis}
                         onChange={(e) => handleInputChange("Jenis", e.target.value)}
-                        class={`w-full ${style.input} ${
-                            errors().Jenis ? "border-red-500 bg-red-50" : "border-gray-300"
+                        disabled={!isEditing()}
+                        class={`w-full ${style.input} border rounded-lg transition-colors ${
+                            isEditing()
+                                ? `focus:outline-none focus:ring-2  focus:border-transparent ${
+                                      errors().Jenis
+                                          ? "border-red-500 bg-red-50"
+                                          : "border-gray-300"
+                                  }`
+                                : "border-gray-300 bg-gray-50"
                         }`}
                         required
                     >
@@ -287,8 +328,15 @@ function FormTambahKendaraan(props) {
                     <select
                         value={formData().BahanBakar}
                         onChange={(e) => handleInputChange("BahanBakar", e.target.value)}
-                        class={`w-full ${style.input} ${
-                            errors().BahanBakar ? "border-red-500 bg-red-50" : "border-gray-300"
+                        disabled={!isEditing()}
+                        class={`w-full ${style.input} border rounded-lg transition-colors ${
+                            isEditing()
+                                ? `focus:outline-none focus:ring-2  focus:border-transparent ${
+                                      errors().BahanBakar
+                                          ? "border-red-500 bg-red-50"
+                                          : "border-gray-300"
+                                  }`
+                                : "border-gray-300 bg-gray-50"
                         }`}
                         required
                     >
@@ -314,8 +362,15 @@ function FormTambahKendaraan(props) {
                         value={formData().Merek}
                         onInput={(e) => handleInputChange("Merek", e.target.value)}
                         placeholder="Contoh: Toyota"
-                        class={`w-full ${style.input} ${
-                            errors().Merek ? "border-red-500 bg-red-50" : "border-gray-300"
+                        disabled={!isEditing()}
+                        class={`w-full ${style.input} border rounded-lg transition-colors ${
+                            isEditing()
+                                ? `focus:outline-none focus:ring-2  focus:border-transparent ${
+                                      errors().Merek
+                                          ? "border-red-500 bg-red-50"
+                                          : "border-gray-300"
+                                  }`
+                                : "border-gray-300 bg-gray-50"
                         }`}
                         required
                     />
@@ -331,8 +386,13 @@ function FormTambahKendaraan(props) {
                         value={formData().Tipe}
                         onInput={(e) => handleInputChange("Tipe", e.target.value)}
                         placeholder="Contoh: Avanza"
-                        class={`w-full ${style.input} ${
-                            errors().Tipe ? "border-red-500 bg-red-50" : "border-gray-300"
+                        disabled={!isEditing()}
+                        class={`w-full ${style.input} border rounded-lg transition-colors ${
+                            isEditing()
+                                ? `focus:outline-none focus:ring-2  focus:border-transparent ${
+                                      errors().Tipe ? "border-red-500 bg-red-50" : "border-gray-300"
+                                  }`
+                                : "border-gray-300 bg-gray-50"
                         }`}
                         required
                     />
@@ -347,8 +407,15 @@ function FormTambahKendaraan(props) {
                     <select
                         value={formData().Status}
                         onChange={(e) => handleInputChange("Status", e.target.value)}
-                        class={`w-full ${style.input} ${
-                            errors().Status ? "border-red-500 bg-red-50" : "border-gray-300"
+                        disabled={!isEditing()}
+                        class={`w-full ${style.input} border rounded-lg transition-colors ${
+                            isEditing()
+                                ? `focus:outline-none focus:ring-2  focus:border-transparent ${
+                                      errors().Status
+                                          ? "border-red-500 bg-red-50"
+                                          : "border-gray-300"
+                                  }`
+                                : "border-gray-300 bg-gray-50"
                         }`}
                     >
                         <option value="Aktif">Aktif</option>
@@ -370,8 +437,15 @@ function FormTambahKendaraan(props) {
                         }
                         placeholder="0"
                         min="0"
-                        class={`w-full ${style.input} ${
-                            errors().JarakTempuh ? "border-red-500 bg-red-50" : "border-gray-300"
+                        disabled={!isEditing()}
+                        class={`w-full ${style.input} border rounded-lg transition-colors ${
+                            isEditing()
+                                ? `focus:outline-none focus:ring-2  focus:border-transparent ${
+                                      errors().JarakTempuh
+                                          ? "border-red-500 bg-red-50"
+                                          : "border-gray-300"
+                                  }`
+                                : "border-gray-300 bg-gray-50"
                         }`}
                     />
                     {errors().JarakTempuh && (
@@ -381,23 +455,31 @@ function FormTambahKendaraan(props) {
             </div>
 
             {/* Action Buttons */}
-            <div class="flex justify-end space-x-3 pt-4 border-t border-gray-200">
-                <button type="button" onClick={resetForm} class={style.buttonLight}>
-                    Reset
-                </button>
-                <button onClick={handleSubmit} disabled={isLoading()} class={style.buttonPrimary}>
-                    {isLoading() ? (
-                        <div class="flex items-center space-x-2">
-                            <div class="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                            <span>Menyimpan...</span>
-                        </div>
-                    ) : (
-                        "Simpan Data"
-                    )}
-                </button>
-            </div>
+            {!props.idData && (
+                <>
+                    <div class="flex justify-end space-x-3 pt-4 border-t border-gray-200">
+                        <button type="button" onClick={resetForm} class={style.buttonLight}>
+                            Reset
+                        </button>
+                        <button
+                            onClick={handleInsert}
+                            disabled={isLoading()}
+                            class={style.buttonPrimary}
+                        >
+                            {isLoading() ? (
+                                <div class="flex items-center space-x-2">
+                                    <div class="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                                    <span>Menyimpan...</span>
+                                </div>
+                            ) : (
+                                "Simpan Data"
+                            )}
+                        </button>
+                    </div>
+                </>
+            )}
         </div>
     );
 }
 
-export default FormTambahKendaraan;
+export default FormKendaraan;

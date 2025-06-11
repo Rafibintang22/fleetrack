@@ -40,7 +40,12 @@ function DaftarKendaraan(props) {
                         <div class="col-span-3 text-center text-gray-500 pb-5">Tidak ada data</div>
                     ) : (
                         <For each={paginatedData()}>
-                            {(kend) => <CardKendaraan {...kend} setOpen={props.setOpen} />}
+                            {(kend) => (
+                                <CardKendaraan
+                                    {...kend}
+                                    setOpen={() => props.setOpen(kend.KendaraanID)}
+                                />
+                            )}
                         </For>
                     )}
                 </div>

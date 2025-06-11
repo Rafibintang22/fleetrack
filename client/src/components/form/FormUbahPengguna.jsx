@@ -7,7 +7,6 @@ import { validateFormPengguna } from "../../Utils/Validation";
 function FormUbahPengguna(props) {
     const userSession = JSON.parse(localStorage.getItem("userSession"));
 
-    axios.defaults.withCredentials = true;
     const fetchOnePengguna = async (id) => {
         if (!id) return null;
 
@@ -26,7 +25,6 @@ function FormUbahPengguna(props) {
         }
     };
 
-    // ✅ Fix: Pass the function and source signal separately
     const [penggunaData, { refetch }] = createResource(() => props.idData, fetchOnePengguna);
 
     const [isEditing, setIsEditing] = createSignal(false);

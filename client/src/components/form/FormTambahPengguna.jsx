@@ -32,7 +32,7 @@ function TambahPengguna(props) {
         }
     };
 
-    axios.defaults.withCredentials = true;
+    // Handle form submit
     const handleSubmit = async () => {
         const validation = validateFormPengguna.tambah(formData());
 

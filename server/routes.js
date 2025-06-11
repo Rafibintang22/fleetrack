@@ -19,6 +19,7 @@ router.delete("/pengguna/:UserID", Authorization.decryption, PenggunaController.
 
 // KENDARAAN
 router.get("/kendaraan", Authorization.decryption, KendaraanController.getAll);
+router.get("/kendaraan/:KendaraanID", Authorization.decryption, KendaraanController.getOne);
 router.post(
     "/kendaraan",
     Authorization.decryption,

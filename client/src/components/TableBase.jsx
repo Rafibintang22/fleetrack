@@ -1,22 +1,16 @@
-import { createSignal, createEffect, createMemo, For, Show } from "solid-js";
+import { createEffect, createMemo, createSignal, For } from "solid-js";
 
 function TableBase({ column, rowData, limit = 10 }) {
-  const [currentPage, setCurrentPage] = createSignal(1);
-  const rowsPerPage = limit;
+    const [currentPage, setCurrentPage] = createSignal(1);
+    const rowsPerPage = limit;
 
-    createEffect(() => {
-    // ini memastikan effect tergantung pada perubahan panjang rowData
-    const _ = rowData.length; 
-    setCurrentPage(1);
-  });
+    const totalPages = createMemo(() => Math.ceil(rowData.length / rowsPerPage));
 
-  const totalPages = createMemo(() => Math.ceil(rowData.length / rowsPerPage));
-
-  const paginatedData = createMemo(() => {
-    const start = (currentPage() - 1) * rowsPerPage;
-    const end = currentPage() * rowsPerPage;
-    return rowData.slice(start, end);
-  });
+    const paginatedData = createMemo(() => {
+        const start = (currentPage() - 1) * rowsPerPage;
+        const end = currentPage() * rowsPerPage;
+        return rowData.slice(start, end);
+    });
 
     const visiblePages = createMemo(() => {
         const total = totalPages();
@@ -53,56 +47,57 @@ function TableBase({ column, rowData, limit = 10 }) {
             // Selalu tampilkan halaman terakhir
             pages.push(total);
         }
-console.log("Paginated Data:", paginatedData());
+
         return pages;
     });
 
     return (
-     <div class="w-full h-full flex flex-col gap-4 justify-between">
-      <div class="relative w-full overflow-x-auto">
-        <table class="min-w-full table-auto text-sm text-left rtl:text-right text-gray-500 overflow-auto">
-          <thead class="sticky top-0 z-10 text-xs text-gray-700 uppercase bg-gray-50">
-            <tr>
-              <For each={column}>
-                {(col) => (
-                  <th
-                    key={col.key}
-                    scope="col"
-                    class="px-6 py-3 whitespace-nowrap"
-                  >
-                    {col.name}
-                  </th>
-                )}
-              </For>
-            </tr>
-          </thead>
-          <tbody>
-            <Show when={paginatedData().length === 0}>
-              <tr>
-                <td
-                  colspan={column.length}
-                  class="px-6 py-4 text-center text-gray-500"
-                >
-                  Tidak ada data
-                </td>
-              </tr>
-            </Show>
-            <For each={paginatedData()}>
-              {(row) => (
-                <tr class="bg-white border-b border-gray-200">
-                  <For each={column}>
-                    {(col) => (
-                      <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                        {row[col.key] ?? "-"}
-                      </td>
-                    )}
-                  </For>
-                </tr>
-              )}
-            </For>
-          </tbody>
-        </table>
-      </div>
+        <div class="w-full h-full flex flex-col gap-4 justify-between">
+            <div class="relative w-full overflow-x-auto">
+                <table class="min-w-full table-auto text-sm text-left rtl:text-right text-gray-500 overflow-auto">
+                    <thead class="sticky top-0 z-10 text-xs text-gray-700 uppercase bg-gray-50">
+                        <tr>
+                            <For each={column}>
+                                {(col) => (
+                                    <th
+                                        key={col.key}
+                                        scope="col"
+                                        class="px-6 py-3 whitespace-nowrap"
+                                    >
+                                        {col.name}
+                                    </th>
+                                )}
+                            </For>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {paginatedData().length === 0 ? (
+                            <tr>
+                                <td
+                                    colspan={column.length}
+                                    class="px-6 py-4 text-center text-gray-500"
+                                >
+                                    Tidak ada data
+                                </td>
+                            </tr>
+                        ) : (
+                            <For each={paginatedData()}>
+                                {(row) => (
+                                    <tr class="bg-white border-b border-gray-200">
+                                        <For each={column}>
+                                            {(col) => (
+                                                <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                                                    {row[col.key]}
+                                                </td>
+                                            )}
+                                        </For>
+                                    </tr>
+                                )}
+                            </For>
+                        )}
+                    </tbody>
+                </table>
+            </div>
             <nav aria-label="navigation table">
                 <ul class="flex flex-wrap justify-center md:justify-end -space-x-px text-sm">
                     <li>

@@ -1,5 +1,6 @@
+import { createEffect } from "solid-js";
 import style from "../style";
-import ModalBase from "./ModalBase";
+import { ModalBase } from "./index";
 import axios from "axios";
 import { urlServer } from "../Utils";
 
@@ -13,20 +14,18 @@ function Tambah(props) {
 
 function Detail(props) {
     const userSession = JSON.parse(localStorage.getItem("userSession"));
-
-    const onDelete = async () => {
+    const onDeletePengguna = async () => {
         try {
             const headers = {
                 headers: {
                     authorization: userSession?.AuthKey,
                 },
             };
-            
-            const response = await axios.delete(`${urlServer}/pengguna/${props.id}`, headers);
+            const response = await axios.delete(`${urlServer}/pengguna/${props.open()}`, headers);
 
             if (response.data?.success === true) {
                 alert("Data pengguna berhasil dihapus");
-                if (props.onDeleteSuccess) props.onDeleteSuccess();
+                location.reload();
             }
         } catch (error) {
             alert(
@@ -39,17 +38,43 @@ function Detail(props) {
         }
     };
 
+    const onDeleteKendaraan = async () => {
+        try {
+            const headers = {
+                headers: {
+                    authorization: userSession?.AuthKey,
+                },
+            };
+            const response = await axios.delete(`${urlServer}/kendaraan/${props.open()}`, headers);
+
+            if (response.data?.success === true) {
+                alert("Data Kendaraan berhasil dihapus");
+                location.reload();
+            }
+        } catch (error) {
+            alert(
+                `Terjadi kesalahan${
+                    error.response?.data?.message
+                        ? ", " + error.response.data.message
+                        : " dalam hapus data Kendaraan"
+                }`
+            );
+        }
+    };
+
     return (
         <ModalBase
             open={props.open}
             onClose={props.onClose}
-            judul={props.judul || "Detail Data"}
+            judul={props.judul || "Detail data"}
             footer={
                 <div class="flex justify-between">
                     <button
                         class={style.buttonDanger}
-                        onClick={async () => {
-                            await onDelete();
+                        onClick={() => {
+                            props.judul === "Detail Data Pengguna"
+                                ? onDeletePengguna()
+                                : onDeleteKendaraan();
                             props.onClose();
                         }}
                     >

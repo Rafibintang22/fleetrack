@@ -1,3 +1,4 @@
+import axios from "axios";
 import { HeaderMainContent, Table } from "../components";
 import GlobalLayout from "../components/layout/GlobalLayout";
 import style from "../style";
@@ -8,9 +9,36 @@ import {
     dataAktivitas,
     dataPemeliharaan,
 } from "../Utils/Model";
+import { createResource } from "solid-js";
 
 function Home() {
     UseSessionCheck();
+    const userSession = JSON.parse(localStorage.getItem("userSession"));
+
+    //fetch function untuk mengambil jumlah kendaraan
+    const fetchJumlahKendaraan = async () => {
+        try {
+            const headers = {
+                headers: {
+                    authorization: userSession?.AuthKey,
+                },
+            };
+            const res = await axios.get(`${urlServer}/kendaraan/dashboard`, headers);
+            return res.data.message;
+        } catch (error) {
+            console.error("Gagal mengambil data kendaraan:", error);
+            return {
+                totalKendaraan: 0,
+                totalAktif: 0,
+                totalDalamPerbaikan: 0,
+                totalTidakAtif: 0,
+            };
+        }
+    };
+
+    // Resource untuk data kendaraan
+    const [jumlahKendaraan] = createResource(fetchJumlahKendaraan);
+    
     return (
         <GlobalLayout>
             <div class="flex flex-col gap-2 bg-white rounded p-4 h-max lg:h-full">

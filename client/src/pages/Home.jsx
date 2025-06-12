@@ -39,7 +39,6 @@ function Home() {
     // Resource untuk data kendaraan
     const [jumlahKendaraan] = createResource(fetchJumlahKendaraan);
 
-    console.log(jumlahKendaraan);
     return (
         <GlobalLayout>
             <div class="flex flex-col gap-2 bg-white rounded p-4 h-max lg:h-full">

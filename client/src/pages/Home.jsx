@@ -38,7 +38,7 @@ function Home() {
 
     // Resource untuk data kendaraan
     const [jumlahKendaraan] = createResource(fetchJumlahKendaraan);
-    
+
     return (
         <GlobalLayout>
             <div class="flex flex-col gap-2 bg-white rounded p-4 h-max lg:h-full">
@@ -56,19 +56,27 @@ function Home() {
                     <div class="grid grid-cols-2 sm:grid-cols-2 gap-3 w-full lg:w-max min-h-full">
                         <div class="p-4 flex flex-col rounded-lg shadow">
                             <h5 class={style.h5}>Total Kendaraan</h5>
-                            <span class="text-2xl font-semibold text-[var(--primary)]">120</span>
+                            <span class="text-2xl font-semibold text-[var(--primary)]">
+                                {jumlahKendaraan.loading ? "-" : jumlahKendaraan()?.totalKendaraan}
+                            </span>
                         </div>
                         <div class="p-4 flex flex-col rounded-lg shadow">
                             <h5 class={style.h5}>Kendaraan Aktif</h5>
-                            <span class="text-2xl font-semibold text-green-600">85</span>
+                            <span class="text-2xl font-semibold text-green-600">
+                                {jumlahKendaraan.loading ? "-" : jumlahKendaraan()?.totalAktif}
+                            </span>
                         </div>
                         <div class="p-4 flex flex-col rounded-lg shadow">
                             <h5 class={style.h5}>Dalam Perbaikan</h5>
-                            <span class="text-2xl font-semibold text-yellow-500">25</span>
+                            <span class="text-2xl font-semibold text-yellow-500">
+                                {jumlahKendaraan.loading ? "-" : jumlahKendaraan()?.totalDalamPerbaikan}
+                            </span>
                         </div>
                         <div class="p-4 flex flex-col rounded-lg shadow">
                             <h5 class={style.h5}>Tidak Aktif</h5>
-                            <span class="text-2xl font-semibold text-red-600">10</span>
+                            <span class="text-2xl font-semibold text-red-600">
+                                {jumlahKendaraan.loading ? "-" : jumlahKendaraan()?.totalTidakAtif}
+                            </span>
                         </div>
                     </div>
                 </div>

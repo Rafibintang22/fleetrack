@@ -17,7 +17,7 @@ const RedirectHome = () => {
     const navigate = useNavigate();
 
     onMount(() => {
-        navigate("/", { replace: true });
+        navigate("/daftarkendaraan", { replace: true });
     });
 
     return null;
@@ -30,7 +30,7 @@ render(
             <Route path="/logout" component={Logout} />
             <Route path="/login" component={Login} />
             <Route path="/register" component={Register} />
-            <Route path="/" component={Home} />
+            {/* <Route path="/" component={Home} /> */}
             <Route path="/daftarkendaraan" component={DaftarKendaraan} />
             <Route
                 path="/daftarpengguna"

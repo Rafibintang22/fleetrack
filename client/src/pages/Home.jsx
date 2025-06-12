@@ -1,60 +1,78 @@
-import { createSignal, createResource, onMount } from "solid-js";
+import { createSignal, createResource, onMount, Show } from "solid-js";
 import { HeaderMainContent, Table } from "../components";
 import GlobalLayout from "../components/layout/GlobalLayout";
 import style from "../style";
 import { UseSessionCheck } from "../Utils";
-import {
-    columnAktivitas,
-    columnPemeliharaan,
-    dataAktivitas,
-    mapPemeliharaan,
-} from "../Utils/Model";
+import { columnAktivitas, columnPemeliharaan, dataAktivitas } from "../Utils/Model";
 
-
-function fetchPemeliharaan() {
-    return fetch("/api/pemeliharaan")
-      .then(res => {
-        if (!res.ok) throw new Error(`Fetch error: ${res.status}`);
-        return res.json();
-      })
-      .then(mapPemeliharaan)
-      .catch(err => {
-        console.error("Error fetching pemeliharaan:", err);
-        throw err; // Penting: tetap lempar error agar Solid tahu kalau ada error
-      });
+async function fetchKendaraan() {
+    return {
+      data: [
+        {
+          Nopol: "B 1234 XYZ",
+          Jenis: "Pickup",
+          Merek: "Toyota",
+          Tipe: "Hilux",
+          JarakTempuh: 12345,
+          BahanBakar: "Solar",
+          Status: "Aktif",
+        },
+        {
+          Nopol: "B 5678 ABC",
+          Jenis: "Truck",
+          Merek: "Isuzu",
+          Tipe: "Giga",
+          JarakTempuh: 45678,
+          BahanBakar: "Solar",
+          Status: "Dalam Perbaikan",
+        },
+        {
+          Nopol: "D 9123 DEF",
+          Jenis: "SUV",
+          Merek: "Mitsubishi",
+          Tipe: "Pajero",
+          JarakTempuh: 7890,
+          BahanBakar: "Bensin",
+          Status: "Tidak Aktif",
+        },
+      ],
+    };
   }
-
+  
 function Home() {
-    UseSessionCheck();
+  UseSessionCheck();
 
-    const [dataPemeliharaan] = createResource(fetchPemeliharaan);
+  const [dataKendaraan] = createResource(fetchKendaraan);
 
-    return (
-        <GlobalLayout>
-            <div class="flex flex-col gap-2 bg-white rounded p-4 h-max lg:h-full">
-                <HeaderMainContent judul={"Beranda"} />
+  return (
+    <GlobalLayout>
+        <div class="flex flex-col gap-2 bg-white rounded p-4 h-max lg:h-full">
+            <HeaderMainContent judul={"Beranda"} />
 
-                <div class="flex flex-col-reverse lg:flex-row justify-between gap-3 overflow-x-hidden p-2 min-h-[45%]">
+            <div class="flex flex-col-reverse lg:flex-row justify-between gap-3 overflow-x-hidden p-2 min-h-[45%]">
                     <div class="flex flex-col gap-2 p-2 rounded-lg shadow w-full min-h-full">
-                    <h4 class={style.h4Primary}>Pemeliharaan yang akan datang</h4>
-                    <Show when={!dataPemeliharaan.loading && !error} fallback={<p>Loading...</p>}>
-                    <Switch>
-                        <Match when={dataPemeliharaan()?.length > 0}>
-                        <Table.Basic
-                            column={columnPemeliharaan}
-                            data={dataPemeliharaan()}
-                            limit={3}
-                        />
-                        </Match>
-                        <Match when={true}>
-                        <p>Tidak ada data pemeliharaan.</p>
-                        </Match>
-                    </Switch>
-                    </Show>
+                            <div class="flex flex-col gap-2 p-2 rounded-lg shadow w-full min-h-full">
+                                <h2 class="text-lg font-semibold">Daftar Kendaraan</h2>
 
-                    <Show when={error}>
-                    <p class="text-red-600">Terjadi error saat memuat data.</p>
-                    </Show>
+                                {dataKendaraan.loading && <p>Loading...</p>}
+                                {dataKendaraan.error && <p class="text-red-500">Error fetching data</p>}
+
+                                {dataKendaraan() && (
+                                    <Table.Basic
+                                    data={dataKendaraan().data}
+                                    column={[
+                                        { key: "Nopol", name: "Nomor Polisi" },
+                                        { key: "Jenis", name: "Jenis" },
+                                        { key: "Merek", name: "Merek" },
+                                        { key: "Tipe", name: "Tipe" },
+                                        { key: "JarakTempuh", name: "Jarak Tempuh" },
+                                        { key: "BahanBakar", name: "Bahan Bakar" },
+                                        { key: "Status", name: "Status" },
+                                    ]}
+                                    limit={10}
+                                    />
+                                )}
+                            </div>
                     </div>
                     <div class="grid grid-cols-2 sm:grid-cols-2 gap-3 w-full lg:w-max min-h-full">
                         <div class="p-4 flex flex-col rounded-lg shadow">
@@ -74,14 +92,14 @@ function Home() {
                             <span class="text-2xl font-semibold text-red-600">10</span>
                         </div>
                     </div>
-                </div>
+            </div>
 
                 <div class="flex flex-col gap-2 p-2 rounded-lg shadow w-full min-h-[45%] lg-h-[45%]">
                     <h4 class={style.h4Primary}>Aktivitas terakhir</h4>
                     <Table.Basic column={columnAktivitas} data={dataAktivitas} limit={3} />
                 </div>
-            </div>
-        </GlobalLayout>
+        </div>
+    </GlobalLayout>
     );
 }
 

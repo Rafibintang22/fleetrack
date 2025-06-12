@@ -18,6 +18,7 @@ router.put("/pengguna/:UserID", Authorization.decryption, PenggunaController.upd
 router.delete("/pengguna/:UserID", Authorization.decryption, PenggunaController.delete);
 
 // KENDARAAN
+
 router.get("/kendaraan", Authorization.decryption, KendaraanController.getAll);
 router.get("/kendaraan/:KendaraanID", Authorization.decryption, KendaraanController.getOne);
 router.post(
@@ -30,4 +31,34 @@ router.post(
     upload.single("Foto"),
     KendaraanController.create
 );
+// Contoh data kendaraan (bisa diganti dengan dari database nanti)
+const dataKendaraan = [
+    {
+        KendaraanID: 1,
+        Nama: "Toyota Avanza",
+        PlatNomor: "B 1234 CD",
+        Jenis: "Mobil",
+        Tahun: 2020,
+    },
+    {
+        KendaraanID: 2,
+        Nama: "Honda Beat",
+        PlatNomor: "B 5678 EF",
+        Jenis: "Motor",
+        Tahun: 2022,
+    },
+    {
+        KendaraanID: 3,
+        Nama: "Suzuki Carry",
+        PlatNomor: "B 9101 GH",
+        Jenis: "Mobil",
+        Tahun: 2018,
+    },
+    // Tambah data kendaraan lainnya di sini sesuai kebutuhan
+];
+
+router.get("/api/kendaraan", KendaraanController.getAll);
+router.get("/kendaraan", authentication, KendaraanController.getAll);
+// export router
 module.exports = { router };
+

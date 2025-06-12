@@ -82,14 +82,5 @@ const dataPemeliharaan = [
     },
 ];
 
-function mapPemeliharaan(data) {
-    if (!Array.isArray(data)) return [];
-    
-    return data.map(item => ({
-      Kendaraan: item.kendaraan || "-",
-      Deskripsi: item.nama || "-",
-      Tanggal: item.tanggal || "-"
-    }));
-  }
 
-export { columnPemeliharaan, dataPemeliharaan, mapPemeliharaan};
+export { columnPemeliharaan, dataPemeliharaan};

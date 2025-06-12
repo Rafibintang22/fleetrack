@@ -20,7 +20,7 @@ class KendaraanController {
             const transformedData = allKendaraan.map((k) => ({
                 KendaraanID: k.id,
                 Nopol: k.nopol,
-                Foto: k.foto, 
+                Foto: k.foto,
                 Jenis: k.jenis,
                 Merek: k.merek,
                 Tipe: k.tipe,
@@ -29,11 +29,13 @@ class KendaraanController {
                 Status: k.status,
             }));
 
-            res.status(200).json({ success: true, data: transformedData });
+            res.status(200).json(transformedData);
         } catch (error) {
             res.status(error.status || 500).json({ error: error.message });
         }
     }
+
+
 
     static async getOne(req, res) {
         try {

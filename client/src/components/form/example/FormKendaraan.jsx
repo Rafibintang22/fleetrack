@@ -1,8 +1,8 @@
 import { createEffect, createResource, createSignal } from "solid-js";
-import style from "../../style";
+import style from "../../../style";
 import axios from "axios";
-import { urlServer } from "../../Utils";
-import { validateFormKendaraan } from "../../Utils/Validation";
+import { urlServer } from "../../../Utils";
+import { validateFormKendaraan } from "../../../Utils/Validation";
 
 // Form Component untuk Tambah Data Kendaraan
 function FormKendaraan(props) {
@@ -250,9 +250,9 @@ function FormKendaraan(props) {
           placeholder="Contoh: D 1234 AB"
           disabled={!isEditing()}
           class={`w-full ${style.input} border rounded-lg transition-colors ${isEditing()
-              ? `focus:outline-none focus:ring-2  focus:border-transparent ${errors().Nopol ? "border-red-500 bg-red-50" : "border-gray-300"
-              }`
-              : "border-gray-300 bg-gray-50"
+            ? `focus:outline-none focus:ring-2  focus:border-transparent ${errors().Nopol ? "border-red-500 bg-red-50" : "border-gray-300"
+            }`
+            : "border-gray-300 bg-gray-50"
             }`}
           required
         />
@@ -268,11 +268,11 @@ function FormKendaraan(props) {
           onChange={(e) => handleInputChange("UserIDTerkait", e.target.value)}
           disabled={!isEditing()}
           class={`w-full ${style.input} border rounded-lg transition-colors ${isEditing()
-              ? `focus:outline-none focus:ring-2  focus:border-transparent ${errors().UserIDTerkait
-                ? "border-red-500 bg-red-50"
-                : "border-gray-300"
-              }`
-              : "border-gray-300 bg-gray-50"
+            ? `focus:outline-none focus:ring-2  focus:border-transparent ${errors().UserIDTerkait
+              ? "border-red-500 bg-red-50"
+              : "border-gray-300"
+            }`
+            : "border-gray-300 bg-gray-50"
             }`}
           required
         >
@@ -297,11 +297,11 @@ function FormKendaraan(props) {
             onChange={(e) => handleInputChange("Jenis", e.target.value)}
             disabled={!isEditing()}
             class={`w-full ${style.input} border rounded-lg transition-colors ${isEditing()
-                ? `focus:outline-none focus:ring-2  focus:border-transparent ${errors().Jenis
-                  ? "border-red-500 bg-red-50"
-                  : "border-gray-300"
-                }`
-                : "border-gray-300 bg-gray-50"
+              ? `focus:outline-none focus:ring-2  focus:border-transparent ${errors().Jenis
+                ? "border-red-500 bg-red-50"
+                : "border-gray-300"
+              }`
+              : "border-gray-300 bg-gray-50"
               }`}
             required
           >
@@ -322,11 +322,11 @@ function FormKendaraan(props) {
             onChange={(e) => handleInputChange("BahanBakar", e.target.value)}
             disabled={!isEditing()}
             class={`w-full ${style.input} border rounded-lg transition-colors ${isEditing()
-                ? `focus:outline-none focus:ring-2  focus:border-transparent ${errors().BahanBakar
-                  ? "border-red-500 bg-red-50"
-                  : "border-gray-300"
-                }`
-                : "border-gray-300 bg-gray-50"
+              ? `focus:outline-none focus:ring-2  focus:border-transparent ${errors().BahanBakar
+                ? "border-red-500 bg-red-50"
+                : "border-gray-300"
+              }`
+              : "border-gray-300 bg-gray-50"
               }`}
             required
           >
@@ -354,11 +354,11 @@ function FormKendaraan(props) {
             placeholder="Contoh: Toyota"
             disabled={!isEditing()}
             class={`w-full ${style.input} border rounded-lg transition-colors ${isEditing()
-                ? `focus:outline-none focus:ring-2  focus:border-transparent ${errors().Merek
-                  ? "border-red-500 bg-red-50"
-                  : "border-gray-300"
-                }`
-                : "border-gray-300 bg-gray-50"
+              ? `focus:outline-none focus:ring-2  focus:border-transparent ${errors().Merek
+                ? "border-red-500 bg-red-50"
+                : "border-gray-300"
+              }`
+              : "border-gray-300 bg-gray-50"
               }`}
             required
           />
@@ -376,9 +376,9 @@ function FormKendaraan(props) {
             placeholder="Contoh: Avanza"
             disabled={!isEditing()}
             class={`w-full ${style.input} border rounded-lg transition-colors ${isEditing()
-                ? `focus:outline-none focus:ring-2  focus:border-transparent ${errors().Tipe ? "border-red-500 bg-red-50" : "border-gray-300"
-                }`
-                : "border-gray-300 bg-gray-50"
+              ? `focus:outline-none focus:ring-2  focus:border-transparent ${errors().Tipe ? "border-red-500 bg-red-50" : "border-gray-300"
+              }`
+              : "border-gray-300 bg-gray-50"
               }`}
             required
           />
@@ -395,11 +395,11 @@ function FormKendaraan(props) {
             onChange={(e) => handleInputChange("Status", e.target.value)}
             disabled={!isEditing()}
             class={`w-full ${style.input} border rounded-lg transition-colors ${isEditing()
-                ? `focus:outline-none focus:ring-2  focus:border-transparent ${errors().Status
-                  ? "border-red-500 bg-red-50"
-                  : "border-gray-300"
-                }`
-                : "border-gray-300 bg-gray-50"
+              ? `focus:outline-none focus:ring-2  focus:border-transparent ${errors().Status
+                ? "border-red-500 bg-red-50"
+                : "border-gray-300"
+              }`
+              : "border-gray-300 bg-gray-50"
               }`}
           >
             <option value="Aktif">Aktif</option>
@@ -423,11 +423,11 @@ function FormKendaraan(props) {
             min="0"
             disabled={!isEditing()}
             class={`w-full ${style.input} border rounded-lg transition-colors ${isEditing()
-                ? `focus:outline-none focus:ring-2  focus:border-transparent ${errors().JarakTempuh
-                  ? "border-red-500 bg-red-50"
-                  : "border-gray-300"
-                }`
-                : "border-gray-300 bg-gray-50"
+              ? `focus:outline-none focus:ring-2  focus:border-transparent ${errors().JarakTempuh
+                ? "border-red-500 bg-red-50"
+                : "border-gray-300"
+              }`
+              : "border-gray-300 bg-gray-50"
               }`}
           />
           {errors().JarakTempuh && (

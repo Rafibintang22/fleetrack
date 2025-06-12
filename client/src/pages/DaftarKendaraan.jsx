@@ -1,5 +1,5 @@
 import { createResource, createSignal, For, Show } from "solid-js";
-import { HeaderMainContent, Modal, Table } from "../components";
+import { HeaderMainContent, Modal, ModalKendaraan, Table } from "../components";
 import GlobalLayout from "../components/layout/GlobalLayout";
 import { dataKendaraan } from "../Utils/Model";
 import { toogleModal, urlServer, UseSessionCheck } from "../Utils";
@@ -53,7 +53,7 @@ function DaftarKendaraan() {
           </Show>
         </div>
       </GlobalLayout>
-      <Modal.Tambah
+      <ModalKendaraan.Tambah
         open={isModalTambah}
         onClose={closeModalTambah}
         judul="Tambah Data Kendaraan"
@@ -64,8 +64,8 @@ function DaftarKendaraan() {
             refetch();
           }}
         />
-      </Modal.Tambah>
-      <Modal.Detail
+      </ModalKendaraan.Tambah>
+      <ModalKendaraan.Detail
         open={isModalDetail}
         onClose={closeModalDetail}
         judul="Detail Data Kendaraan"
@@ -77,7 +77,7 @@ function DaftarKendaraan() {
             refetch();
           }}
         />
-      </Modal.Detail>
+      </ModalKendaraan.Detail>
     </>
   );
 }

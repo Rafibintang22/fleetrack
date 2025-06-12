@@ -66,7 +66,7 @@ function FormUbahKendaraan(props) {
 
   return (
     <div class="space-y-2">
-      {/* Upload Foto */}
+      {/* display Foto */}
       <div>
         <label class="block text-sm font-medium text-gray-700 mb-2">
           Foto Kendaraan<span class="text-red-500">*</span>
@@ -105,14 +105,14 @@ function FormUbahKendaraan(props) {
           <label class="block text-sm font-medium text-gray-700 mb-1">
             Jenis Kendaraan <span class="text-red-500">*</span>
           </label>
-          <p>{formData().Jenis}</p>
+          <p class={`w-full ${style.input} border rounded-lg transition-colors`}>{formData().Jenis}</p>
         </div>
 
         <div>
           <label class="block text-sm font-medium text-gray-700 mb-1">
             Bahan Bakar <span class="text-red-500">*</span>
           </label>
-          <p>{formData().BahanBakar}</p>
+          <p class={`w-full ${style.input} border rounded-lg transition-colors`}>{formData().BahanBakar}</p>
         </div>
       </div>
 
@@ -122,14 +122,14 @@ function FormUbahKendaraan(props) {
           <label class="block text-sm font-medium text-gray-700 mb-1">
             Merek <span class="text-red-500">*</span>
           </label>
-          <p>{formData().Merek}</p>
+          <p class={`w-full ${style.input} border rounded-lg transition-colors`}>{formData().Merek}</p>
         </div>
 
         <div>
           <label class="block text-sm font-medium text-gray-700 mb-1">
             Tipe <span class="text-red-500">*</span>
           </label>
-          <p>{formData().Tipe}</p>
+          <p class={`w-full ${style.input} border rounded-lg transition-colors`}>{formData().Tipe}</p>
         </div>
       </div>
 
@@ -137,14 +137,14 @@ function FormUbahKendaraan(props) {
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
           <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
-          <p>{formData().Status}</p>
+          <p class={`w-full ${style.input} border rounded-lg transition-colors`}>{formData().Status}</p>
         </div>
 
         <div>
           <label class="block text-sm font-medium text-gray-700 mb-1">
             Jarak Tempuh (KM)
           </label>
-          <p>{formData().JarakTempuh}</p>
+          <p class={`w-full ${style.input} border rounded-lg transition-colors`}>{formData().JarakTempuh}</p>
         </div>
       </div>
     </div >

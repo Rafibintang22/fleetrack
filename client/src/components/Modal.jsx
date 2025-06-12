@@ -21,10 +21,10 @@ function Detail(props) {
           authorization: userSession?.AuthKey,
         },
       };
-      const response = await axios.delete(`${urlServer}/kendaraan/${props.open()}`, headers);
+      const response = await axios.delete(`${urlServer}/pengguna/${props.open()}`, headers);
 
       if (response.data?.success === true) {
-        alert("Data kendaraan berhasil dihapus");
+        alert("Data pengguna berhasil dihapus");
       }
     } catch (error) {
       alert(

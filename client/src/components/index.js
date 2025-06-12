@@ -6,6 +6,5 @@ import ModalBase from "./ModalBase";
 import Sidebar from "./Sidebar";
 import Table from "./Table";
 import TableBase from "./TableBase";
-import ModalKendaraan from "./ModalKendaraan";
 
-export { Header, Sidebar, ModalBase, Modal, ModalKendaraan, TableBase, Table, CardKendaraan, HeaderMainContent };
+export { Header, Sidebar, ModalBase, Modal, TableBase, Table, CardKendaraan, HeaderMainContent };

@@ -30,7 +30,7 @@ render(
             <Route path="/logout" component={Logout} />
             <Route path="/login" component={Login} />
             <Route path="/register" component={Register} />
-            {/* <Route path="/" component={Home} /> */}
+            {/* <Route path="/home" component={Home} /> */}
             <Route path="/daftarkendaraan" component={DaftarKendaraan} />
             <Route
                 path="/daftarpengguna"

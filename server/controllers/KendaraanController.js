@@ -46,9 +46,11 @@ class KendaraanController {
                 return res.status(403).json({ message: "Akses ditolak" });
             }
 
+            const penggunaTerkait = dataPengguna.find((p) => p.id === kendaraan.id_pengguna);
+
             const transformedData = {
                 KendaraanID: kendaraan.id,
-                UserIDTerkait: kendaraan.id_pengguna,
+                PenggunaTerkait: { UserID: penggunaTerkait.id, Nama: penggunaTerkait.nama },
                 Nopol: kendaraan.nopol,
                 Foto: kendaraan.foto,
                 Jenis: kendaraan.jenis,
@@ -230,6 +232,7 @@ class KendaraanController {
     static async getJumlahKendaraan(req, res) {
         try {
             const { Perusahaan } = req.dataSession;
+            console.log(Perusahaan);
             const perusahaanID = Perusahaan.PerusahaanID;
             console.log(perusahaanID);
 
@@ -252,6 +255,7 @@ class KendaraanController {
             };
             res.status(200).json({ success: true, message: dataKendaraanPerusahaan });
         } catch (error) {
+            console.log("its error sir");
             console.error(error);
             res.status(error.status || 500).json({ error: error.message });
         }

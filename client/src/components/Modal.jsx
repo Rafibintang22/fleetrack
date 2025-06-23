@@ -14,7 +14,7 @@ function Tambah(props) {
 
 function Detail(props) {
     const userSession = JSON.parse(localStorage.getItem("userSession"));
-    const onDelete = async () => {
+    const onDeletePengguna = async () => {
         try {
             const headers = {
                 headers: {
@@ -25,6 +25,7 @@ function Detail(props) {
 
             if (response.data?.success === true) {
                 alert("Data pengguna berhasil dihapus");
+                location.reload();
             }
         } catch (error) {
             alert(
@@ -32,6 +33,30 @@ function Detail(props) {
                     error.response?.data?.message
                         ? ", " + error.response.data.message
                         : " dalam hapus data pengguna"
+                }`
+            );
+        }
+    };
+
+    const onDeleteKendaraan = async () => {
+        try {
+            const headers = {
+                headers: {
+                    authorization: userSession?.AuthKey,
+                },
+            };
+            const response = await axios.delete(`${urlServer}/kendaraan/${props.open()}`, headers);
+
+            if (response.data?.success === true) {
+                alert("Data Kendaraan berhasil dihapus");
+                location.reload();
+            }
+        } catch (error) {
+            alert(
+                `Terjadi kesalahan${
+                    error.response?.data?.message
+                        ? ", " + error.response.data.message
+                        : " dalam hapus data Kendaraan"
                 }`
             );
         }
@@ -47,7 +72,9 @@ function Detail(props) {
                     <button
                         class={style.buttonDanger}
                         onClick={() => {
-                            onDelete();
+                            props.judul === "Detail Data Pengguna"
+                                ? onDeletePengguna()
+                                : onDeleteKendaraan();
                             props.onClose();
                         }}
                     >

@@ -21,19 +21,19 @@ router.delete("/pengguna/:UserID", Authorization.decryption, PenggunaController.
 router.get("/kendaraan", Authorization.decryption, KendaraanController.getAll);
 router.get("/kendaraan/:KendaraanID", Authorization.decryption, KendaraanController.getOne);
 router.get(
-    "/dashboard",
-    Authorization.decryption,
-    KendaraanController.getJumlahKendaraan
+  "/dashboard",
+  Authorization.decryption,
+  KendaraanController.getJumlahKendaraan
 );
 router.post(
-    "/kendaraan",
-    Authorization.decryption,
-    (req, res, next) => {
-        req.folder = "gambarkendaraan";
-        next();
-    },
-    upload.single("Foto"),
-    KendaraanController.create
+  "/kendaraan",
+  Authorization.decryption,
+  (req, res, next) => {
+    req.folder = "gambarkendaraan";
+    next();
+  },
+  upload.single("Foto"),
+  KendaraanController.create
 );
 router.delete("/kendaraan/:KendaraanID", Authorization.decryption, KendaraanController.delete);
 module.exports = { router };

@@ -193,7 +193,6 @@ function FormKendaraan(props) {
                     Foto Kendaraan<span class="text-red-500">*</span>
                 </label>
 
-                {/* Hidden file input */}
                 <input
                     ref={fileInputRef}
                     type="file"
@@ -202,7 +201,6 @@ function FormKendaraan(props) {
                     class="hidden"
                 />
 
-                {/* Clickable preview area */}
                 <div
                     onClick={triggerFileInput}
                     class={`w-full border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-[var(--orange-400)] hover:bg-orange-50 transition-colors duration-200 flex items-center justify-center overflow-hidden ${
@@ -250,13 +248,8 @@ function FormKendaraan(props) {
                     value={formData().Nopol}
                     onInput={(e) => handleInputChange("Nopol", e.target.value)}
                     placeholder="Contoh: D 1234 AB"
-                    disabled={!isEditing()}
                     class={`w-full ${style.input} border rounded-lg transition-colors ${
-                        isEditing()
-                            ? `focus:outline-none focus:ring-2  focus:border-transparent ${
-                                  errors().Nopol ? "border-red-500 bg-red-50" : "border-gray-300"
-                              }`
-                            : "border-gray-300 bg-gray-50"
+                        errors().Nopol ? "border-red-500 bg-red-50" : "border-gray-300"
                     }`}
                     required
                 />
@@ -270,15 +263,8 @@ function FormKendaraan(props) {
                 <select
                     value={formData().UserIDTerkait}
                     onChange={(e) => handleInputChange("UserIDTerkait", e.target.value)}
-                    disabled={!isEditing()}
                     class={`w-full ${style.input} border rounded-lg transition-colors ${
-                        isEditing()
-                            ? `focus:outline-none focus:ring-2  focus:border-transparent ${
-                                  errors().UserIDTerkait
-                                      ? "border-red-500 bg-red-50"
-                                      : "border-gray-300"
-                              }`
-                            : "border-gray-300 bg-gray-50"
+                        errors().UserIDTerkait ? "border-red-500 bg-red-50" : "border-gray-300"
                     }`}
                     required
                 >
@@ -301,15 +287,8 @@ function FormKendaraan(props) {
                     <select
                         value={formData().Jenis}
                         onChange={(e) => handleInputChange("Jenis", e.target.value)}
-                        disabled={!isEditing()}
                         class={`w-full ${style.input} border rounded-lg transition-colors ${
-                            isEditing()
-                                ? `focus:outline-none focus:ring-2  focus:border-transparent ${
-                                      errors().Jenis
-                                          ? "border-red-500 bg-red-50"
-                                          : "border-gray-300"
-                                  }`
-                                : "border-gray-300 bg-gray-50"
+                            errors().Jenis ? "border-red-500 bg-red-50" : "border-gray-300"
                         }`}
                         required
                     >
@@ -328,15 +307,8 @@ function FormKendaraan(props) {
                     <select
                         value={formData().BahanBakar}
                         onChange={(e) => handleInputChange("BahanBakar", e.target.value)}
-                        disabled={!isEditing()}
                         class={`w-full ${style.input} border rounded-lg transition-colors ${
-                            isEditing()
-                                ? `focus:outline-none focus:ring-2  focus:border-transparent ${
-                                      errors().BahanBakar
-                                          ? "border-red-500 bg-red-50"
-                                          : "border-gray-300"
-                                  }`
-                                : "border-gray-300 bg-gray-50"
+                            errors().BahanBakar ? "border-red-500 bg-red-50" : "border-gray-300"
                         }`}
                         required
                     >
@@ -362,15 +334,8 @@ function FormKendaraan(props) {
                         value={formData().Merek}
                         onInput={(e) => handleInputChange("Merek", e.target.value)}
                         placeholder="Contoh: Toyota"
-                        disabled={!isEditing()}
                         class={`w-full ${style.input} border rounded-lg transition-colors ${
-                            isEditing()
-                                ? `focus:outline-none focus:ring-2  focus:border-transparent ${
-                                      errors().Merek
-                                          ? "border-red-500 bg-red-50"
-                                          : "border-gray-300"
-                                  }`
-                                : "border-gray-300 bg-gray-50"
+                            errors().Merek ? "border-red-500 bg-red-50" : "border-gray-300"
                         }`}
                         required
                     />
@@ -386,13 +351,8 @@ function FormKendaraan(props) {
                         value={formData().Tipe}
                         onInput={(e) => handleInputChange("Tipe", e.target.value)}
                         placeholder="Contoh: Avanza"
-                        disabled={!isEditing()}
                         class={`w-full ${style.input} border rounded-lg transition-colors ${
-                            isEditing()
-                                ? `focus:outline-none focus:ring-2  focus:border-transparent ${
-                                      errors().Tipe ? "border-red-500 bg-red-50" : "border-gray-300"
-                                  }`
-                                : "border-gray-300 bg-gray-50"
+                            errors().Tipe ? "border-red-500 bg-red-50" : "border-gray-300"
                         }`}
                         required
                     />
@@ -407,15 +367,8 @@ function FormKendaraan(props) {
                     <select
                         value={formData().Status}
                         onChange={(e) => handleInputChange("Status", e.target.value)}
-                        disabled={!isEditing()}
                         class={`w-full ${style.input} border rounded-lg transition-colors ${
-                            isEditing()
-                                ? `focus:outline-none focus:ring-2  focus:border-transparent ${
-                                      errors().Status
-                                          ? "border-red-500 bg-red-50"
-                                          : "border-gray-300"
-                                  }`
-                                : "border-gray-300 bg-gray-50"
+                            errors().Status ? "border-red-500 bg-red-50" : "border-gray-300"
                         }`}
                     >
                         <option value="Aktif">Aktif</option>
@@ -437,15 +390,8 @@ function FormKendaraan(props) {
                         }
                         placeholder="0"
                         min="0"
-                        disabled={!isEditing()}
                         class={`w-full ${style.input} border rounded-lg transition-colors ${
-                            isEditing()
-                                ? `focus:outline-none focus:ring-2  focus:border-transparent ${
-                                      errors().JarakTempuh
-                                          ? "border-red-500 bg-red-50"
-                                          : "border-gray-300"
-                                  }`
-                                : "border-gray-300 bg-gray-50"
+                            errors().JarakTempuh ? "border-red-500 bg-red-50" : "border-gray-300"
                         }`}
                     />
                     {errors().JarakTempuh && (

@@ -4,7 +4,7 @@ import GlobalLayout from "../components/layout/GlobalLayout";
 import { dataKendaraan } from "../Utils/Model";
 import { toogleModal, urlServer, UseSessionCheck } from "../Utils";
 import axios from "axios";
-import { FormKendaraan } from "../components/form";
+import { FormKendaraan, FormUbahKendaraan } from "../components/form";
 
 function DaftarKendaraan() {
     const userSession = JSON.parse(localStorage.getItem("userSession"));
@@ -70,7 +70,7 @@ function DaftarKendaraan() {
                 onClose={closeModalDetail}
                 judul="Detail Data Kendaraan"
             >
-                <FormKendaraan
+                <FormUbahKendaraan
                     idData={isModalDetail()}
                     onSuccess={() => {
                         closeModalDetail();

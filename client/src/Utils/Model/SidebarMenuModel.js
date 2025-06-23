@@ -1,10 +1,10 @@
 const SidebarMenu = [
-    {
-        link: "/",
-        name: "Beranda",
-        icon: { src: "https://img.icons8.com/101828/ios/100/home.png", alt: "icon-home" },
-        allowedRoles: ["Owner", "Admin", "Driver"],
-    },
+    // {
+    //     link: "/",
+    //     name: "Beranda",
+    //     icon: { src: "https://img.icons8.com/101828/ios/100/home.png", alt: "icon-home" },
+    //     allowedRoles: ["Owner", "Admin", "Driver"],
+    // },
     {
         link: "/daftarkendaraan",
         name: "Daftar Kendaraan",
